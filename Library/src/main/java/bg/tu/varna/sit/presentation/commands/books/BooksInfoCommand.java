@@ -14,7 +14,6 @@ public class BooksInfoCommand implements Command {
 
     @Override
     public void execute() {
-        System.out.println("Displaying information for ISBN: " + isbn);
-        bookService.getBookByIsbn(isbn).ifPresent(System.out::println);
+        bookService.showBookInfo(isbn);
     }
 }

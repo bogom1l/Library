@@ -4,7 +4,7 @@ import bg.tu.varna.sit.presentation.Command;
 import bg.tu.varna.sit.service.BookService;
 
 public class BooksAllCommand implements Command {
-    private final BookService bookService;
+    private BookService bookService;
 
     public BooksAllCommand(BookService bookService) {
         this.bookService = bookService;
@@ -12,7 +12,6 @@ public class BooksAllCommand implements Command {
 
     @Override
     public void execute() {
-        System.out.println("Displaying all books...");
-        bookService.getAllBooks().forEach(System.out::println);
+        bookService.showAllBooks();
     }
 }

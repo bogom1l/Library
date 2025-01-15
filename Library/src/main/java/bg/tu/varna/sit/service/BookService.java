@@ -3,109 +3,195 @@ package bg.tu.varna.sit.service;
 import bg.tu.varna.sit.dao.JAXBParser;
 import bg.tu.varna.sit.data.Book;
 import bg.tu.varna.sit.data.BooksWrapper;
-import jakarta.xml.bind.JAXBException;
+import bg.tu.varna.sit.data.User;
+import bg.tu.varna.sit.data.UsersWrapper;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class BookService {
-    private final BooksWrapper booksWrapper;
-    private File currentFile;
+    private static final String usersFilePath = System.getProperty("user.dir") + File.separator + "Library" + File.separator + "users.xml";
+    private String booksFilePath;
+    private List<Book> books;
+    private List<User> users;
 
+    // Constructor
     public BookService() {
-        this.booksWrapper = new BooksWrapper();
+        books = new ArrayList<>();
+        users = new ArrayList<>();
     }
 
+    public void setFilePath(String booksFileName) {
+        String directory = System.getProperty("user.dir");
 
-    public boolean open(File xmlFile) {
-        if (xmlFile == null || !xmlFile.exists()) {
-            return false;
+        this.booksFilePath = directory + File.separator + "Library" + File.separator + booksFileName;
+
+        System.out.println("Books file path set to: " + this.booksFilePath);
+        System.out.println("Users file path set to: " + usersFilePath);
+    }
+
+    // Open books and users data from XML
+    public void open() {
+        BooksWrapper booksWrapper = JAXBParser.loadObjectFromXML(booksFilePath, BooksWrapper.class);
+        if (booksWrapper != null) {
+            books = booksWrapper.getBooks();
+            System.out.println("Books loaded: " + books.size());
+        } else {
+            System.out.println("No books found in the XML file.");
         }
 
-        try {
-            this.booksWrapper = JAXBParser.loadObjectFromXML(xmlFile);
-            this.currentFile = xmlFile;
-            return true;
-        } catch (JAXBException e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-
-
-    // Loads books from the XML file
-    public List<Book> getAllBooks() {
-        BooksWrapper booksWrapper = JAXBParser.loadObjectFromXML(BOOKS_FILE_PATH, BooksWrapper.class);
-        return booksWrapper.getBooks();
-    }
-
-    // Find a book by ISBN
-    public Optional<Book> getBookByIsbn(String isbn) {
-        return getAllBooks().stream().filter(book -> book.getIsbn().equals(isbn)).findFirst();
-    }
-
-    // Find books based on search criteria (title, author, etc.)
-    public List<Book> findBooks(String option, String criteria) {
-        switch (option.toLowerCase()) {
-            case "title":
-                return getAllBooks().stream()
-                        .filter(book -> book.getTitle().toLowerCase().contains(criteria.toLowerCase()))
-                        .collect(Collectors.toList());
-            case "author":
-                return getAllBooks().stream()
-                        .filter(book -> book.getAuthor().toLowerCase().contains(criteria.toLowerCase()))
-                        .collect(Collectors.toList());
-            case "tag":
-                return getAllBooks().stream()
-                        .filter(book -> book.getKeywords().toLowerCase().contains(criteria.toLowerCase()))
-                        .collect(Collectors.toList());
-            default:
-                return List.of();
+        UsersWrapper usersWrapper = JAXBParser.loadObjectFromXML(usersFilePath, UsersWrapper.class);
+        if (usersWrapper != null) {
+            users = usersWrapper.getUsers();
+            System.out.println("Users loaded: " + users.size());
+        } else {
+            System.out.println("No users found in the XML file.");
         }
     }
 
-    // Sort books by title, author, year, or rating
-    public List<Book> sortBooks(String option, String order) {
-        List<Book> books = getAllBooks();
-        switch (option.toLowerCase()) {
-            case "title":
-                return books.stream()
-                        .sorted((b1, b2) -> order.equalsIgnoreCase("asc") ? b1.getTitle().compareTo(b2.getTitle()) : b2.getTitle().compareTo(b1.getTitle()))
-                        .collect(Collectors.toList());
-            case "author":
-                return books.stream()
-                        .sorted((b1, b2) -> order.equalsIgnoreCase("asc") ? b1.getAuthor().compareTo(b2.getAuthor()) : b2.getAuthor().compareTo(b1.getAuthor()))
-                        .collect(Collectors.toList());
-            case "year":
-                return books.stream()
-                        .sorted((b1, b2) -> order.equalsIgnoreCase("asc") ? Integer.compare(b1.getYear(), b2.getYear()) : Integer.compare(b2.getYear(), b1.getYear()))
-                        .collect(Collectors.toList());
-            case "rating":
-                return books.stream()
-                        .sorted((b1, b2) -> order.equalsIgnoreCase("asc") ? Double.compare(b1.getRating(), b2.getRating()) : Double.compare(b2.getRating(), b1.getRating()))
-                        .collect(Collectors.toList());
-            default:
-                return books;
-        }
+    // Close the application, optionally saving the data
+    public void close() {
+        System.out.println("Application is closing.");
+        // Optionally save data before closing
+        saveBooks();
+        saveUsers();
     }
 
     // Save books to the XML file
-    public void saveBooks() {
+    public void save() {
+        saveBooks();
+        saveUsers();
+    }
+
+    private void saveBooks() {
         BooksWrapper booksWrapper = new BooksWrapper();
-        List<Book> books = getAllBooks(); // Get current books
-        booksWrapper.setBooks(books); // Set books in the wrapper
-        String fileName = "books.xml"; // TODO
-        JAXBParser.saveObjectToXML(fileName, booksWrapper); // Save the BooksWrapper object to XML
+        booksWrapper.setBooks(books);
+        JAXBParser.saveObjectToXML(booksFilePath, booksWrapper);
         System.out.println("Books saved to XML.");
     }
 
+    private void saveUsers() {
+        UsersWrapper usersWrapper = new UsersWrapper();
+        usersWrapper.setUsers(users);
+        JAXBParser.saveObjectToXML(usersFilePath, usersWrapper);
+        System.out.println("Users saved to XML.");
+    }
 
-    // Load books (if needed) - already handled in getAllBooks()
-    public void loadBooks() {
-        List<Book> books = getAllBooks();
-        System.out.println("Loaded " + books.size() + " books.");
+
+    // Display all books
+    public void showAllBooks() {
+        if (books.isEmpty()) {
+            System.out.println("No books available.");
+        } else {
+            books.forEach(System.out::println);
+        }
+    }
+
+    // Display book information by ISBN
+    public void showBookInfo(String isbn) {
+        Book book = findBookByIsbn(isbn);
+        if (book != null) {
+            System.out.println(book);
+        } else {
+            System.out.println("Book with ISBN " + isbn + " not found.");
+        }
+    }
+
+    // Find books by title, author, or tag
+    public void findBooks(String option, String optionString) {
+        List<Book> foundBooks = new ArrayList<>();
+        switch (option.toLowerCase()) {
+            case "title":
+                foundBooks = books.stream()
+                        .filter(book -> book.getTitle().toLowerCase().contains(optionString.toLowerCase()))
+                        .collect(Collectors.toList());
+                break;
+            case "author":
+                foundBooks = books.stream()
+                        .filter(book -> book.getAuthor().toLowerCase().contains(optionString.toLowerCase()))
+                        .collect(Collectors.toList());
+                break;
+            case "tag":
+                foundBooks = books.stream()
+                        .filter(book -> book.getKeywords().toLowerCase().contains(optionString.toLowerCase()))
+                        .collect(Collectors.toList());
+                break;
+            default:
+                System.out.println("Invalid option.");
+                return;
+        }
+        foundBooks.forEach(System.out::println);
+    }
+
+    // Sort books by title, author, year, or rating
+    public void sortBooks(String option, String order) {
+        Comparator<Book> comparator = null;
+
+        switch (option.toLowerCase()) {
+            case "title":
+                comparator = Comparator.comparing(Book::getTitle);
+                break;
+            case "author":
+                comparator = Comparator.comparing(Book::getAuthor);
+                break;
+            case "year":
+                comparator = Comparator.comparingInt(Book::getYear);
+                break;
+            case "rating":
+                comparator = Comparator.comparingDouble(Book::getRating);
+                break;
+            default:
+                System.out.println("Invalid option for sorting.");
+                return;
+        }
+
+        if ("desc".equalsIgnoreCase(order)) {
+            comparator = comparator.reversed();
+        }
+
+        books.sort(comparator);
+        books.forEach(System.out::println);
+    }
+
+    // Add a new user
+    public void addUser(String username, String password) {
+        if (findUserByUsername(username) != null) {
+            System.out.println("User already exists.");
+            return;
+        }
+
+        User newUser = new User(username, password, true);
+        users.add(newUser);
+        saveUsers();  // Save the updated users list
+        System.out.println("User added.");
+    }
+
+    // Remove a user
+    public void removeUser(String username) {
+        User userToRemove = findUserByUsername(username);
+        if (userToRemove == null) {
+            System.out.println("User not found.");
+            return;
+        }
+        users.remove(userToRemove);
+        saveUsers();  // Save the updated users list
+        System.out.println("User removed.");
+    }
+
+    private Book findBookByIsbn(String isbn) {
+        return books.stream()
+                .filter(book -> book.getIsbn().equals(isbn))
+                .findFirst()
+                .orElse(null);
+    }
+
+    private User findUserByUsername(String username) {
+        return users.stream()
+                .filter(user -> user.getUsername().equals(username))
+                .findFirst()
+                .orElse(null);
     }
 }

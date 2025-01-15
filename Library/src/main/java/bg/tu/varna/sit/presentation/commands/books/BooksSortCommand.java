@@ -16,7 +16,6 @@ public class BooksSortCommand implements Command {
 
     @Override
     public void execute() {
-        System.out.println("Sorting books by " + option + " in " + order + " order.");
-        bookService.sortBooks(option, order).forEach(System.out::println);
+        bookService.sortBooks(option, order);
     }
 }

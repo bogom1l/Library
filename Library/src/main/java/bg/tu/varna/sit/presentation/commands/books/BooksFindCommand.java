@@ -16,7 +16,6 @@ public class BooksFindCommand implements Command {
 
     @Override
     public void execute() {
-        System.out.println("Finding books by " + option + ": " + optionString);
-        bookService.findBooks(option, optionString).forEach(System.out::println);
+        bookService.findBooks(option, optionString);
     }
 }

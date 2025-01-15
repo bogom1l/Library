@@ -28,8 +28,8 @@ public class CommandDispatcher {
         try {
             switch (command.toLowerCase()) {
                 case "open":
-                    String fileName = commandParts[1];
-                    new OpenCommand(bookService, fileName).execute();
+                    bookService.setFilePath(commandParts[1]);
+                    new OpenCommand(bookService).execute();
                     break;
                 case "close":
                     new CloseCommand(bookService).execute();
@@ -38,8 +38,7 @@ public class CommandDispatcher {
                     new SaveCommand(bookService).execute();
                     break;
                 case "exit":
-                    // TODO new ExitCommand().execute();
-                    break;
+                    System.exit(0);
 //TODO                case "login":
 //                    if (commandParts.length > 1) {
 //                        new LoginCommand(userService, commandParts[1]).execute();

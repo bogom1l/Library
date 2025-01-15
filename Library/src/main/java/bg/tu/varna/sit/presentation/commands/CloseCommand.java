@@ -12,6 +12,6 @@ public class CloseCommand implements Command {
 
     @Override
     public void execute() {
-        System.out.println("Closing application...");
+        bookService.close();
     }
 }

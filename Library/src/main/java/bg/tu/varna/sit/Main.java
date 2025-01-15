@@ -22,5 +22,6 @@ public class Main {
             // Dispatch the input to the CommandDispatcher
             commandDispatcher.dispatch(input);
         }
+
     }
 }
