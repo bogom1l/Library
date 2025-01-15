@@ -20,14 +20,5 @@
         <title>Title 2</title>
         <year>2023</year>
     </book>
-    <book>
-        <author>New Author</author>
-        <description>New Description</description>
-        <genre>New Genre</genre>
-        <isbn>ISBN99999</isbn>
-        <keywords>New Keywords</keywords>
-        <rating>4.7</rating>
-        <title>New Title</title>
-        <year>2025</year>
-    </book>
+
 </books>

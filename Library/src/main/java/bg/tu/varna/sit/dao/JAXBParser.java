@@ -10,7 +10,7 @@ import java.io.File;
 public class JAXBParser {
 
     // Save object to XML
-    public static void saveObjectToXML(Object object, String filePath) {
+    public static void saveObjectToXML(String filePath, Object object) {
         try {
             JAXBContext context = JAXBContext.newInstance(object.getClass());
             Marshaller marshaller = context.createMarshaller();

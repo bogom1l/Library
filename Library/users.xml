@@ -10,9 +10,4 @@
         <password>password2</password>
         <username>user2</username>
     </user>
-    <user>
-        <admin>false</admin>
-        <password>newPassword</password>
-        <username>newUser</username>
-    </user>
 </users>
