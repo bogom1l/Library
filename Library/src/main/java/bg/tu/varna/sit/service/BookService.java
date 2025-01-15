@@ -3,24 +3,43 @@ package bg.tu.varna.sit.service;
 import bg.tu.varna.sit.dao.JAXBParser;
 import bg.tu.varna.sit.data.Book;
 import bg.tu.varna.sit.data.BooksWrapper;
+import jakarta.xml.bind.JAXBException;
 
+import java.io.File;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class BookService {
-    private static final String BOOKS_FILE_PATH = "books.xml";
-
     private final BooksWrapper booksWrapper;
+    private File currentFile;
 
     public BookService() {
         this.booksWrapper = new BooksWrapper();
     }
 
+
+    public boolean open(File xmlFile) {
+        if (xmlFile == null || !xmlFile.exists()) {
+            return false;
+        }
+
+        try {
+            this.booksWrapper = JAXBParser.loadObjectFromXML(xmlFile);
+            this.currentFile = xmlFile;
+            return true;
+        } catch (JAXBException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+
+
     // Loads books from the XML file
     public List<Book> getAllBooks() {
         BooksWrapper booksWrapper = JAXBParser.loadObjectFromXML(BOOKS_FILE_PATH, BooksWrapper.class);
-        return booksWrapper != null ? booksWrapper.getBooks() : List.of();
+        return booksWrapper.getBooks();
     }
 
     // Find a book by ISBN
@@ -78,7 +97,8 @@ public class BookService {
         BooksWrapper booksWrapper = new BooksWrapper();
         List<Book> books = getAllBooks(); // Get current books
         booksWrapper.setBooks(books); // Set books in the wrapper
-        JAXBParser.saveObjectToXML(BOOKS_FILE_PATH, booksWrapper); // Save the BooksWrapper object to XML
+        String fileName = "books.xml"; // TODO
+        JAXBParser.saveObjectToXML(fileName, booksWrapper); // Save the BooksWrapper object to XML
         System.out.println("Books saved to XML.");
     }
 

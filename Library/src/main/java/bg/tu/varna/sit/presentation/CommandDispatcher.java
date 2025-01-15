@@ -28,7 +28,8 @@ public class CommandDispatcher {
         try {
             switch (command.toLowerCase()) {
                 case "open":
-                    new OpenCommand(bookService).execute();
+                    String fileName = commandParts[1];
+                    new OpenCommand(bookService, fileName).execute();
                     break;
                 case "close":
                     new CloseCommand(bookService).execute();
