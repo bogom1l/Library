@@ -66,6 +66,8 @@ public class BookService {
 
     public void close() {
         System.out.println("File closed.");
+        books = new ArrayList<>();
+        users = new ArrayList<>();
     }
 
     public void save() {
