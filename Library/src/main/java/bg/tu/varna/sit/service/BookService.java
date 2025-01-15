@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class BookService {
+    private static final String directory = System.getProperty("user.dir");
     private static final String usersFilePath = System.getProperty("user.dir") + File.separator + "Library" + File.separator + "users.xml";
     private String booksFilePath;
     private List<Book> books;
@@ -26,10 +27,7 @@ public class BookService {
     }
 
     public void setFilePath(String booksFileName) {
-        String directory = System.getProperty("user.dir");
-
         this.booksFilePath = directory + File.separator + "Library" + File.separator + booksFileName;
-
         System.out.println("Books file path set to: " + this.booksFilePath);
         System.out.println("Users file path set to: " + usersFilePath);
     }
@@ -43,7 +41,6 @@ public class BookService {
         }
     }
 
-    // Open books and users data from XML
     public void open() {
         if (!isFileAccessible()) {
             System.out.println("The books file is currently in use or not accessible.");
@@ -67,12 +64,10 @@ public class BookService {
         }
     }
 
-    // Close the application, optionally saving the data
     public void close() {
         System.out.println("File closed.");
     }
 
-    // Save books to the XML file
     public void save() {
         saveBooks();
         saveUsers();
@@ -90,6 +85,14 @@ public class BookService {
         usersWrapper.setUsers(users);
         JAXBParser.saveObjectToXML(usersFilePath, usersWrapper);
         System.out.println("Users saved to XML.");
+    }
+
+    public void saveAs(String newFilePath) {
+        BooksWrapper booksWrapper = new BooksWrapper();
+        booksWrapper.setBooks(books);
+        String fullNewFilePath = directory + File.separator + "Library" + File.separator + newFilePath;
+        JAXBParser.saveObjectToXML(fullNewFilePath, booksWrapper);
+        System.out.println("Books saved to new path: " + fullNewFilePath);
     }
 
     public void displayAllBooks() {

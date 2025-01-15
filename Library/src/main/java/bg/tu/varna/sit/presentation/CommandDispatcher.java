@@ -1,8 +1,6 @@
 package bg.tu.varna.sit.presentation;
 
-import bg.tu.varna.sit.presentation.commands.CloseCommand;
-import bg.tu.varna.sit.presentation.commands.OpenCommand;
-import bg.tu.varna.sit.presentation.commands.SaveCommand;
+import bg.tu.varna.sit.presentation.commands.*;
 import bg.tu.varna.sit.presentation.commands.books.BooksAllCommand;
 import bg.tu.varna.sit.presentation.commands.books.BooksFindCommand;
 import bg.tu.varna.sit.presentation.commands.books.BooksInfoCommand;
@@ -25,7 +23,7 @@ public class CommandDispatcher {
         try {
             switch (command.toLowerCase()) {
                 case "open":
-                    bookService.setFilePath(commandParts[1]);
+                    bookService.setFilePath(commandParts[1]); // todo: moje bi da premestq toq red w OpenCommand classa
                     new OpenCommand(bookService).execute();
                     break;
                 case "close":
@@ -33,6 +31,12 @@ public class CommandDispatcher {
                     break;
                 case "save":
                     new SaveCommand(bookService).execute();
+                    break;
+                case "saveas":
+                    new SaveAsCommand(bookService, commandParts[1]).execute();
+                    break;
+                case "help":
+                    new HelpCommand().execute();
                     break;
                 case "exit":
                     System.exit(0);
