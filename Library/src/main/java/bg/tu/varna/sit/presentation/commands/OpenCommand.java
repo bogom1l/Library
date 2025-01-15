@@ -13,5 +13,6 @@ public class OpenCommand implements Command {
     @Override
     public void execute() {
         bookService.open();
+        // Todo checks...
     }
 }

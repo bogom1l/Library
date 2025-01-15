@@ -10,15 +10,12 @@ import bg.tu.varna.sit.presentation.commands.books.BooksSortCommand;
 import bg.tu.varna.sit.presentation.commands.users.UsersAddCommand;
 import bg.tu.varna.sit.presentation.commands.users.UsersRemoveCommand;
 import bg.tu.varna.sit.service.BookService;
-import bg.tu.varna.sit.service.UserService;
 
 public class CommandDispatcher {
     private final BookService bookService;
-    private final UserService userService;
 
-    public CommandDispatcher(BookService bookService, UserService userService) {
+    public CommandDispatcher(BookService bookService) {
         this.bookService = bookService;
-        this.userService = userService;
     }
 
     public void dispatch(String commandLine) {
@@ -112,14 +109,14 @@ public class CommandDispatcher {
         switch (subCommand) {
             case "add":
                 if (commandParts.length > 3) {
-                    new UsersAddCommand(userService, commandParts[2], commandParts[3]).execute();
+                    new UsersAddCommand(bookService, commandParts[2], commandParts[3]).execute();
                 } else {
                     System.out.println("Usage: users add <username> <password>");
                 }
                 break;
             case "remove":
                 if (commandParts.length > 2) {
-                    new UsersRemoveCommand(userService, commandParts[2]).execute();
+                    new UsersRemoveCommand(bookService, commandParts[2]).execute();
                 } else {
                     System.out.println("Usage: users remove <username>");
                 }

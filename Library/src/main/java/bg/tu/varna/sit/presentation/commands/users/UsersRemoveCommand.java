@@ -1,20 +1,20 @@
 package bg.tu.varna.sit.presentation.commands.users;
 
 import bg.tu.varna.sit.presentation.Command;
-import bg.tu.varna.sit.service.UserService;
+import bg.tu.varna.sit.service.BookService;
 
 public class UsersRemoveCommand implements Command {
-    private UserService userService;
+    private BookService bookService;
     private String username;
 
-    public UsersRemoveCommand(UserService userService, String username) {
-        this.userService = userService;
+    public UsersRemoveCommand(BookService bookService, String username) {
+        this.bookService = bookService;
         this.username = username;
     }
 
     @Override
     public void execute() {
         System.out.println("Removing user: " + username);
-        userService.removeUser(username);
+        bookService.removeUser(username);
     }
 }

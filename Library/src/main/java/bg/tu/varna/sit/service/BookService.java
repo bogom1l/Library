@@ -7,6 +7,8 @@ import bg.tu.varna.sit.data.User;
 import bg.tu.varna.sit.data.UsersWrapper;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -18,7 +20,6 @@ public class BookService {
     private List<Book> books;
     private List<User> users;
 
-    // Constructor
     public BookService() {
         books = new ArrayList<>();
         users = new ArrayList<>();
@@ -33,8 +34,22 @@ public class BookService {
         System.out.println("Users file path set to: " + usersFilePath);
     }
 
+    public boolean isFileAccessible() {
+        File file = new File(booksFilePath);
+        try (FileInputStream fis = new FileInputStream(file)) {
+            return true; // File is accessible
+        } catch (IOException e) {
+            return false; // File is not accessible
+        }
+    }
+
     // Open books and users data from XML
     public void open() {
+        if (!isFileAccessible()) {
+            System.out.println("The books file is currently in use or not accessible.");
+            return;
+        }
+
         BooksWrapper booksWrapper = JAXBParser.loadObjectFromXML(booksFilePath, BooksWrapper.class);
         if (booksWrapper != null) {
             books = booksWrapper.getBooks();
@@ -54,10 +69,7 @@ public class BookService {
 
     // Close the application, optionally saving the data
     public void close() {
-        System.out.println("Application is closing.");
-        // Optionally save data before closing
-        saveBooks();
-        saveUsers();
+        System.out.println("File closed.");
     }
 
     // Save books to the XML file
@@ -80,9 +92,7 @@ public class BookService {
         System.out.println("Users saved to XML.");
     }
 
-
-    // Display all books
-    public void showAllBooks() {
+    public void displayAllBooks() {
         if (books.isEmpty()) {
             System.out.println("No books available.");
         } else {
@@ -90,8 +100,7 @@ public class BookService {
         }
     }
 
-    // Display book information by ISBN
-    public void showBookInfo(String isbn) {
+    public void displayBookInfo(String isbn) {
         Book book = findBookByIsbn(isbn);
         if (book != null) {
             System.out.println(book);

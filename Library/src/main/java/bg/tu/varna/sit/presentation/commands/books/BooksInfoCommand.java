@@ -14,6 +14,6 @@ public class BooksInfoCommand implements Command {
 
     @Override
     public void execute() {
-        bookService.showBookInfo(isbn);
+        bookService.displayBookInfo(isbn);
     }
 }

@@ -12,6 +12,6 @@ public class BooksAllCommand implements Command {
 
     @Override
     public void execute() {
-        bookService.showAllBooks();
+        bookService.displayAllBooks();
     }
 }

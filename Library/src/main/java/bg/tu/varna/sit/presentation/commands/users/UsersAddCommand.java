@@ -1,15 +1,15 @@
 package bg.tu.varna.sit.presentation.commands.users;
 
 import bg.tu.varna.sit.presentation.Command;
-import bg.tu.varna.sit.service.UserService;
+import bg.tu.varna.sit.service.BookService;
 
 public class UsersAddCommand implements Command {
-    private UserService userService;
+    private BookService bookService;
     private String username;
     private String password;
 
-    public UsersAddCommand(UserService userService, String username, String password) {
-        this.userService = userService;
+    public UsersAddCommand(BookService bookService, String username, String password) {
+        this.bookService = bookService;
         this.username = username;
         this.password = password;
     }
@@ -17,6 +17,6 @@ public class UsersAddCommand implements Command {
     @Override
     public void execute() {
         System.out.println("Adding user: " + username);
-        userService.addUser(username, password);
+        bookService.addUser(username, password);
     }
 }
