@@ -9,6 +9,7 @@ import java.io.File;
 
 public class JAXBParser {
 
+    // Save object to XML
     public static void saveObjectToXML(Object object, String filePath) {
         try {
             JAXBContext context = JAXBContext.newInstance(object.getClass());
@@ -20,6 +21,7 @@ public class JAXBParser {
         }
     }
 
+    // Load object from XML
     public static <T> T loadObjectFromXML(String filePath, Class<T> clazz) {
         try {
             JAXBContext context = JAXBContext.newInstance(clazz);
