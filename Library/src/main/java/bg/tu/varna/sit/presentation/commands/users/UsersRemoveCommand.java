@@ -4,8 +4,8 @@ import bg.tu.varna.sit.presentation.Command;
 import bg.tu.varna.sit.service.BookService;
 
 public class UsersRemoveCommand implements Command {
-    private BookService bookService;
-    private String username;
+    private final BookService bookService;
+    private final String username;
 
     public UsersRemoveCommand(BookService bookService, String username) {
         this.bookService = bookService;

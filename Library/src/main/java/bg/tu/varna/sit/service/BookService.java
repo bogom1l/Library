@@ -138,13 +138,6 @@ public class BookService {
                 .orElse(null);
     }
 
-    private User findUserByUsername(String username) {
-        return users.stream()
-                .filter(user -> user.getUsername().equals(username))
-                .findFirst()
-                .orElse(null);
-    }
-
     public void findBooks(String option, String optionString) {
         List<Book> foundBooks = new ArrayList<>();
         switch (option.toLowerCase()) {
@@ -170,7 +163,6 @@ public class BookService {
         foundBooks.forEach(System.out::println);
     }
 
-    // Sort books by title, author, year, or rating
     public void sortBooks(String option, String order) {
         Comparator<Book> comparator = null;
 
@@ -200,21 +192,19 @@ public class BookService {
         books.forEach(System.out::println);
     }
 
+    // ------------------------------------------------------------------------
 
-    // Add a new user
     public void addUser(String username, String password) {
         if (findUserByUsername(username) != null) {
             System.out.println("User already exists.");
             return;
         }
 
-        User newUser = new User(username, password, true);
+        User newUser = new User(username, password, false);
         users.add(newUser);
-        saveUsers();  // Save the updated users list
         System.out.println("User added.");
     }
 
-    // Remove a user
     public void removeUser(String username) {
         User userToRemove = findUserByUsername(username);
         if (userToRemove == null) {
@@ -222,9 +212,14 @@ public class BookService {
             return;
         }
         users.remove(userToRemove);
-        saveUsers();  // Save the updated users list
         System.out.println("User removed.");
     }
 
+    private User findUserByUsername(String username) {
+        return users.stream()
+                .filter(user -> user.getUsername().equals(username))
+                .findFirst()
+                .orElse(null);
+    }
 
 }

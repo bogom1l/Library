@@ -4,9 +4,9 @@ import bg.tu.varna.sit.presentation.Command;
 import bg.tu.varna.sit.service.BookService;
 
 public class UsersAddCommand implements Command {
-    private BookService bookService;
-    private String username;
-    private String password;
+    private final BookService bookService;
+    private final String username;
+    private final String password;
 
     public UsersAddCommand(BookService bookService, String username, String password) {
         this.bookService = bookService;
