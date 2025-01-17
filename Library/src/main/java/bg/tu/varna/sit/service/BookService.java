@@ -114,6 +114,16 @@ public class BookService {
         }
     }
 
+    public boolean addBook(Book newBook) {
+        if (findBookByIsbn(newBook.getIsbn()) != null) {
+            return false;
+        }
+        books.add(newBook);
+        //saveBooks();
+        return true;
+    }
+
+
     // Find books by title, author, or tag
     public void findBooks(String option, String optionString) {
         List<Book> foundBooks = new ArrayList<>();

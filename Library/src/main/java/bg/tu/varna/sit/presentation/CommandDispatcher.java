@@ -1,10 +1,7 @@
 package bg.tu.varna.sit.presentation;
 
 import bg.tu.varna.sit.presentation.commands.*;
-import bg.tu.varna.sit.presentation.commands.books.BooksAllCommand;
-import bg.tu.varna.sit.presentation.commands.books.BooksFindCommand;
-import bg.tu.varna.sit.presentation.commands.books.BooksInfoCommand;
-import bg.tu.varna.sit.presentation.commands.books.BooksSortCommand;
+import bg.tu.varna.sit.presentation.commands.books.*;
 import bg.tu.varna.sit.presentation.commands.users.UsersAddCommand;
 import bg.tu.varna.sit.presentation.commands.users.UsersRemoveCommand;
 import bg.tu.varna.sit.service.BookService;
@@ -81,6 +78,21 @@ public class CommandDispatcher {
                     new BooksInfoCommand(bookService, commandParts[2]).execute();
                 } else {
                     System.out.println("Usage: books info <isbn>");
+                }
+                break;
+            case "add":
+                if (commandParts.length == 10) {
+                    String author = commandParts[2];
+                    String title = commandParts[3];
+                    String genre = commandParts[4];
+                    String description = commandParts[5];
+                    int year = Integer.parseInt(commandParts[6]);
+                    double rating = Double.parseDouble(commandParts[7]);
+                    String keywords = commandParts[8];
+                    String isbn = commandParts[9];
+                    new BooksAddCommand(bookService, author, title, genre, description, year, rating, keywords, isbn).execute();
+                } else {
+                    System.out.println("Usage: books add <author> <title> <genre> <description> <year> <rating> <keywords> <isbn>");
                 }
                 break;
             case "find":
