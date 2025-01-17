@@ -19,18 +19,26 @@ public class BookService {
     private String booksFilePath;
     private List<Book> books;
     private List<User> users;
-    private boolean isFileOpened = false;
-
+    private boolean isBooksFileOpened = false;
 
     public BookService() {
         books = new ArrayList<>();
         users = new ArrayList<>();
+        openUsersFile();
     }
 
-    public void setFilePath(String booksFileName) {
-        this.booksFilePath = directory + File.separator + "Library" + File.separator + booksFileName;
-        System.out.println("Books file path set to: " + this.booksFilePath);
-        System.out.println("Users file path set to: " + usersFilePath);
+    private void openUsersFile() {
+        UsersWrapper usersWrapper = JAXBParser.loadObjectFromXML(usersFilePath, UsersWrapper.class);
+        if (usersWrapper != null) {
+            users = usersWrapper.getUsers();
+            System.out.println("Users loaded: " + users.size());
+        } else {
+            System.out.println("No users found in the XML file.");
+        }
+    }
+
+    public boolean isBooksFileOpened() {
+        return this.isBooksFileOpened;
     }
 
     public boolean isFileAccessible() {
@@ -42,23 +50,21 @@ public class BookService {
         }
     }
 
-    public boolean isFileOpened() {
-        return this.isFileOpened;
+    private boolean doesFileExist(String filePath) {
+        File file = new File(filePath);
+        return file.exists() && file.isFile();
     }
 
     public void open(String booksFileName) {
+        booksFilePath = directory + File.separator + "Library" + File.separator + booksFileName;
 
-        this.booksFilePath = directory + File.separator + "Library" + File.separator + booksFileName;
-        //System.out.println("Books file path set to: " + this.booksFilePath);
-        //System.out.println("Users file path set to: " + usersFilePath);
-
-        if (isFileOpened) {
+        if (isBooksFileOpened) {
             System.out.println("The books file is already opened.");
             return;
         }
 
-        if (!isFileAccessible()) {
-            System.out.println("The books file is currently in use or not accessible.");
+        if (!doesFileExist(booksFilePath)) {
+            System.out.println("The books file doesnt' exist.");
             return;
         }
 
@@ -70,32 +76,22 @@ public class BookService {
             System.out.println("No books found in the XML file.");
         }
 
-        UsersWrapper usersWrapper = JAXBParser.loadObjectFromXML(usersFilePath, UsersWrapper.class);
-        if (usersWrapper != null) {
-            users = usersWrapper.getUsers();
-            System.out.println("Users loaded: " + users.size());
-        } else {
-            System.out.println("No users found in the XML file.");
-        }
-
-        isFileOpened = true;
+        isBooksFileOpened = true;
     }
 
     public void close() {
-        if (!isFileOpened) {
+        if (!isBooksFileOpened) {
             System.out.println("No file is currently opened.");
             return;
         }
 
         books = new ArrayList<>();
-        users = new ArrayList<>();
-        isFileOpened = false;
+        isBooksFileOpened = false;
         System.out.println("File closed.");
     }
 
     public void save() {
         saveBooks();
-        saveUsers();
     }
 
     private void saveBooks() {
@@ -103,13 +99,6 @@ public class BookService {
         booksWrapper.setBooks(books);
         JAXBParser.saveObjectToXML(booksFilePath, booksWrapper);
         System.out.println("Books saved to XML.");
-    }
-
-    private void saveUsers() {
-        UsersWrapper usersWrapper = new UsersWrapper();
-        usersWrapper.setUsers(users);
-        JAXBParser.saveObjectToXML(usersFilePath, usersWrapper);
-        System.out.println("Users saved to XML.");
     }
 
     public void saveAs(String newFilePath) {
@@ -218,6 +207,13 @@ public class BookService {
 
     // ------------------------------------------------------------------------
 
+    private void saveUsers() {
+        UsersWrapper usersWrapper = new UsersWrapper();
+        usersWrapper.setUsers(users);
+        JAXBParser.saveObjectToXML(usersFilePath, usersWrapper);
+        System.out.println("Users saved to XML.");
+    }
+
     public void addUser(String username, String password) {
         if (findUserByUsername(username) != null) {
             System.out.println("User already exists.");
@@ -226,6 +222,7 @@ public class BookService {
 
         User newUser = new User(username, password, false);
         users.add(newUser);
+        saveUsers();
         System.out.println("User added.");
     }
 
@@ -236,6 +233,7 @@ public class BookService {
             return;
         }
         users.remove(userToRemove);
+        saveUsers();
         System.out.println("User removed.");
     }
 
