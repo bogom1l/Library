@@ -14,15 +14,6 @@ public class OpenCommand implements Command {
 
     @Override
     public void execute() {
-        if (!isValidFileName(fileName)) {
-            System.out.println("Invalid file format. Please provide a valid .xml file.");
-            return;
-        }
-
         bookService.open(fileName);
-    }
-
-    private boolean isValidFileName(String fileName) {
-        return fileName.endsWith(".xml");
     }
 }

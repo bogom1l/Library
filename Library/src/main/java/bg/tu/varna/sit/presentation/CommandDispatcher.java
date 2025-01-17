@@ -14,14 +14,15 @@ public class CommandDispatcher {
     }
 
     public void dispatch(String commandLine) {
+
         String[] commandParts = commandLine.split(" ");
         String command = commandParts[0];
 
         try {
             switch (command.toLowerCase()) {
                 case "open":
-                    //bookService.setFilePath(commandParts[1]); // todo: moje bi da premestq toq red w OpenCommand classa
-                    new OpenCommand(bookService, commandParts[1]).execute();
+                    String fileName = commandParts[1];
+                    new OpenCommand(bookService, fileName).execute();
                     break;
                 case "close":
                     new CloseCommand(bookService).execute();
@@ -30,29 +31,21 @@ public class CommandDispatcher {
                     new SaveCommand(bookService).execute();
                     break;
                 case "saveas":
-                    new SaveAsCommand(bookService, commandParts[1]).execute();
+                    String newFileName = commandParts[1];
+                    new SaveAsCommand(bookService, newFileName).execute();
                     break;
                 case "help":
                     new HelpCommand().execute();
                     break;
                 case "exit":
                     System.exit(0);
-//TODO                case "login":
-//                    if (commandParts.length > 1) {
-//                        new LoginCommand(userService, commandParts[1]).execute();
-//                    } else {
-//                        System.out.println("Usage: login <username>");
-//                    }
-//                    break;
-//                case "logout":
-//                    new LogoutCommand(userService).execute();
-//                    break;
                 case "books":
                     handleBooksCommand(commandParts);
                     break;
                 case "users":
                     handleUsersCommand(commandParts);
                     break;
+                //todo add login/logout
                 default:
                     System.out.println("Unknown command. Type 'help' for a list of commands.");
             }
@@ -72,13 +65,6 @@ public class CommandDispatcher {
         switch (subCommand) {
             case "all":
                 new BooksAllCommand(bookService).execute();
-                break;
-            case "info":
-                if (commandParts.length == 3) {
-                    new BooksInfoCommand(bookService, commandParts[2]).execute();
-                } else {
-                    System.out.println("Usage: books info <isbn>");
-                }
                 break;
             case "add":
                 if (commandParts.length == 10) {
@@ -103,16 +89,28 @@ public class CommandDispatcher {
                     System.out.println("Usage: books remove <isbn>");
                 }
                 break;
+            case "info":
+                if (commandParts.length == 3) {
+                    String isbn = commandParts[2];
+                    new BooksInfoCommand(bookService, isbn).execute();
+                } else {
+                    System.out.println("Usage: books info <isbn>");
+                }
+                break;
             case "find":
                 if (commandParts.length == 4) {
-                    new BooksFindCommand(bookService, commandParts[2], commandParts[3]).execute();
+                    String option = commandParts[2];
+                    String optionString = commandParts[3];
+                    new BooksFindCommand(bookService, option, optionString).execute();
                 } else {
                     System.out.println("Usage: books find <option> <option_string>");
                 }
                 break;
             case "sort":
-                if (commandParts.length > 3) {
-                    new BooksSortCommand(bookService, commandParts[2], commandParts[3]).execute();
+                if (commandParts.length == 4) {
+                    String option = commandParts[2];
+                    String order = commandParts[3];
+                    new BooksSortCommand(bookService, option, order).execute();
                 } else {
                     System.out.println("Usage: books sort <option> <asc/desc>");
                 }
@@ -132,15 +130,18 @@ public class CommandDispatcher {
 
         switch (subCommand) {
             case "add":
-                if (commandParts.length > 3) {
-                    new UsersAddCommand(bookService, commandParts[2], commandParts[3]).execute();
+                if (commandParts.length == 4) {
+                    String username = commandParts[2];
+                    String password = commandParts[3];
+                    new UsersAddCommand(bookService, username, password).execute();
                 } else {
                     System.out.println("Usage: users add <username> <password>");
                 }
                 break;
             case "remove":
-                if (commandParts.length > 2) {
-                    new UsersRemoveCommand(bookService, commandParts[2]).execute();
+                if (commandParts.length == 3) {
+                    String username = commandParts[2];
+                    new UsersRemoveCommand(bookService, username).execute();
                 } else {
                     System.out.println("Usage: users remove <username>");
                 }

@@ -55,6 +55,10 @@ public class BookService {
         return file.exists() && file.isFile();
     }
 
+    private boolean isValidFileName(String fileName) {
+        return fileName.endsWith(".xml");
+    }
+
     public void open(String booksFileName) {
         booksFilePath = directory + File.separator + "Library" + File.separator + booksFileName;
 
@@ -63,8 +67,13 @@ public class BookService {
             return;
         }
 
+        if (!isValidFileName(booksFileName)) {
+            System.out.println("Invalid file format. Please provide a valid .xml file.");
+            return;
+        }
+
         if (!doesFileExist(booksFilePath)) {
-            System.out.println("The books file doesnt' exist.");
+            System.out.println("The file doesn't exist.");
             return;
         }
 
