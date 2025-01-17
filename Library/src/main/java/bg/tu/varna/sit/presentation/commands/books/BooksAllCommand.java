@@ -4,7 +4,7 @@ import bg.tu.varna.sit.presentation.Command;
 import bg.tu.varna.sit.service.BookService;
 
 public class BooksAllCommand implements Command {
-    private BookService bookService;
+    private final BookService bookService;
 
     public BooksAllCommand(BookService bookService) {
         this.bookService = bookService;

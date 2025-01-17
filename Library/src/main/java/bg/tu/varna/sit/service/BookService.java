@@ -12,7 +12,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class BookService {
     private static final String directory = System.getProperty("user.dir");
@@ -119,7 +118,6 @@ public class BookService {
             return false;
         }
         books.add(newBook);
-        //saveBooks();
         return true;
     }
 
@@ -128,32 +126,42 @@ public class BookService {
 
         if (bookToRemove != null) {
             books.remove(bookToRemove);
-            //saveBooks();
             return true;
         }
         return false;
     }
 
+    private Book findBookByIsbn(String isbn) {
+        return books.stream()
+                .filter(book -> book.getIsbn().equals(isbn))
+                .findFirst()
+                .orElse(null);
+    }
 
+    private User findUserByUsername(String username) {
+        return users.stream()
+                .filter(user -> user.getUsername().equals(username))
+                .findFirst()
+                .orElse(null);
+    }
 
-    // Find books by title, author, or tag
     public void findBooks(String option, String optionString) {
         List<Book> foundBooks = new ArrayList<>();
         switch (option.toLowerCase()) {
             case "title":
                 foundBooks = books.stream()
                         .filter(book -> book.getTitle().toLowerCase().contains(optionString.toLowerCase()))
-                        .collect(Collectors.toList());
+                        .toList();
                 break;
             case "author":
                 foundBooks = books.stream()
                         .filter(book -> book.getAuthor().toLowerCase().contains(optionString.toLowerCase()))
-                        .collect(Collectors.toList());
+                        .toList();
                 break;
             case "tag":
                 foundBooks = books.stream()
                         .filter(book -> book.getKeywords().toLowerCase().contains(optionString.toLowerCase()))
-                        .collect(Collectors.toList());
+                        .toList();
                 break;
             default:
                 System.out.println("Invalid option.");
@@ -192,6 +200,7 @@ public class BookService {
         books.forEach(System.out::println);
     }
 
+
     // Add a new user
     public void addUser(String username, String password) {
         if (findUserByUsername(username) != null) {
@@ -217,17 +226,5 @@ public class BookService {
         System.out.println("User removed.");
     }
 
-    private Book findBookByIsbn(String isbn) {
-        return books.stream()
-                .filter(book -> book.getIsbn().equals(isbn))
-                .findFirst()
-                .orElse(null);
-    }
 
-    private User findUserByUsername(String username) {
-        return users.stream()
-                .filter(user -> user.getUsername().equals(username))
-                .findFirst()
-                .orElse(null);
-    }
 }

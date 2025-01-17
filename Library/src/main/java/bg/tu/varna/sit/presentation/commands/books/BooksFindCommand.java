@@ -4,9 +4,9 @@ import bg.tu.varna.sit.presentation.Command;
 import bg.tu.varna.sit.service.BookService;
 
 public class BooksFindCommand implements Command {
-    private BookService bookService;
-    private String option;
-    private String optionString;
+    private final BookService bookService;
+    private final String option;
+    private final String optionString;
 
     public BooksFindCommand(BookService bookService, String option, String optionString) {
         this.bookService = bookService;

@@ -74,7 +74,7 @@ public class CommandDispatcher {
                 new BooksAllCommand(bookService).execute();
                 break;
             case "info":
-                if (commandParts.length > 2) {
+                if (commandParts.length == 3) {
                     new BooksInfoCommand(bookService, commandParts[2]).execute();
                 } else {
                     System.out.println("Usage: books info <isbn>");
@@ -104,7 +104,7 @@ public class CommandDispatcher {
                 }
                 break;
             case "find":
-                if (commandParts.length > 3) {
+                if (commandParts.length == 4) {
                     new BooksFindCommand(bookService, commandParts[2], commandParts[3]).execute();
                 } else {
                     System.out.println("Usage: books find <option> <option_string>");
