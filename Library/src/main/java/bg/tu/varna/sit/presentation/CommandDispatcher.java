@@ -20,8 +20,8 @@ public class CommandDispatcher {
         try {
             switch (command.toLowerCase()) {
                 case "open":
-                    bookService.setFilePath(commandParts[1]); // todo: moje bi da premestq toq red w OpenCommand classa
-                    new OpenCommand(bookService).execute();
+                    //bookService.setFilePath(commandParts[1]); // todo: moje bi da premestq toq red w OpenCommand classa
+                    new OpenCommand(bookService, commandParts[1]).execute();
                     break;
                 case "close":
                     new CloseCommand(bookService).execute();

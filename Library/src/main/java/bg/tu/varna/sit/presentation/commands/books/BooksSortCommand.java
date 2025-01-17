@@ -4,9 +4,9 @@ import bg.tu.varna.sit.presentation.Command;
 import bg.tu.varna.sit.service.BookService;
 
 public class BooksSortCommand implements Command {
-    private BookService bookService;
-    private String option;
-    private String order;
+    private final BookService bookService;
+    private final String option;
+    private final String order;
 
     public BooksSortCommand(BookService bookService, String option, String order) {
         this.bookService = bookService;

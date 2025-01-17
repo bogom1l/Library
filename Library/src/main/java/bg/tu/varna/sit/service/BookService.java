@@ -19,6 +19,8 @@ public class BookService {
     private String booksFilePath;
     private List<Book> books;
     private List<User> users;
+    private boolean isFileOpened = false;
+
 
     public BookService() {
         books = new ArrayList<>();
@@ -40,7 +42,21 @@ public class BookService {
         }
     }
 
-    public void open() {
+    public boolean isFileOpened() {
+        return this.isFileOpened;
+    }
+
+    public void open(String booksFileName) {
+
+        this.booksFilePath = directory + File.separator + "Library" + File.separator + booksFileName;
+        //System.out.println("Books file path set to: " + this.booksFilePath);
+        //System.out.println("Users file path set to: " + usersFilePath);
+
+        if (isFileOpened) {
+            System.out.println("The books file is already opened.");
+            return;
+        }
+
         if (!isFileAccessible()) {
             System.out.println("The books file is currently in use or not accessible.");
             return;
@@ -61,12 +77,20 @@ public class BookService {
         } else {
             System.out.println("No users found in the XML file.");
         }
+
+        isFileOpened = true;
     }
 
     public void close() {
-        System.out.println("File closed.");
+        if (!isFileOpened) {
+            System.out.println("No file is currently opened.");
+            return;
+        }
+
         books = new ArrayList<>();
         users = new ArrayList<>();
+        isFileOpened = false;
+        System.out.println("File closed.");
     }
 
     public void save() {

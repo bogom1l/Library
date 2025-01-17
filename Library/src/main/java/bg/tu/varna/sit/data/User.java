@@ -9,7 +9,8 @@ public class User {
     private String password;
     private boolean isAdmin;
 
-    public User() {}
+    public User() {
+    }
 
     public User(String username, String password, boolean isAdmin) {
         this.username = username;
