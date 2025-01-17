@@ -95,6 +95,14 @@ public class CommandDispatcher {
                     System.out.println("Usage: books add <author> <title> <genre> <description> <year> <rating> <keywords> <isbn>");
                 }
                 break;
+            case "remove":
+                if (commandParts.length == 3) {
+                    String isbn = commandParts[2];
+                    new BooksRemoveCommand(bookService, isbn).execute();
+                } else {
+                    System.out.println("Usage: books remove <isbn>");
+                }
+                break;
             case "find":
                 if (commandParts.length > 3) {
                     new BooksFindCommand(bookService, commandParts[2], commandParts[3]).execute();

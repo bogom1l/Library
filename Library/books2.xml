@@ -11,16 +11,6 @@
         <year>2025</year>
     </book>
     <book>
-        <author>Author 2</author>
-        <description>Description 2</description>
-        <genre>Genre 2</genre>
-        <isbn>ISBN12346</isbn>
-        <keywords>Keywords 2</keywords>
-        <rating>4.0</rating>
-        <title>Title 2</title>
-        <year>2023</year>
-    </book>
-    <book>
         <author>a</author>
         <description>d</description>
         <genre>g</genre>

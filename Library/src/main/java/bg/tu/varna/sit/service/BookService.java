@@ -123,6 +123,18 @@ public class BookService {
         return true;
     }
 
+    public boolean removeBook(String isbn) {
+        Book bookToRemove = findBookByIsbn(isbn);
+
+        if (bookToRemove != null) {
+            books.remove(bookToRemove);
+            //saveBooks();
+            return true;
+        }
+        return false;
+    }
+
+
 
     // Find books by title, author, or tag
     public void findBooks(String option, String optionString) {
