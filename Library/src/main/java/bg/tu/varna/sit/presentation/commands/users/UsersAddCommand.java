@@ -1,5 +1,7 @@
 package bg.tu.varna.sit.presentation.commands.users;
 
+
+import bg.tu.varna.sit.data.User;
 import bg.tu.varna.sit.presentation.Command;
 import bg.tu.varna.sit.service.BookService;
 
@@ -16,6 +18,12 @@ public class UsersAddCommand implements Command {
 
     @Override
     public void execute() {
-        bookService.addUser(username, password);
+        User newUser = new User(username, password, false);
+
+        if (bookService.addUser(newUser)) {
+            System.out.println("User added successfully.");
+        } else {
+            System.out.println("Failed to add the user.");
+        }
     }
 }

@@ -14,6 +14,10 @@ public class UsersRemoveCommand implements Command {
 
     @Override
     public void execute() {
-        bookService.removeUser(username);
+        if (bookService.removeUser(username)) {
+            System.out.println("User with username " + username + " removed successfully.");
+        } else {
+            System.out.println("Failed to remove the user.");
+        }
     }
 }

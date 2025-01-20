@@ -352,47 +352,47 @@ public class BookService {
         System.out.println("Users saved to XML.");
     }
 
-    public void addUser(String username, String password) {
+    public boolean addUser(User newUser) {
         if (!isUserLoggedIn()) {
             System.out.println("No user is currently logged in.");
-            return;
+            return false;
         }
 
         if (!isUserAdmin()) {
             System.out.println("Access denied! You must be an admin perform this action.");
-            return;
+            return false;
         }
 
-        if (findUserByUsername(username) != null) {
+        if (findUserByUsername(newUser.getUsername()) != null) {
             System.out.println("User already exists.");
-            return;
+            return false;
         }
 
-        User newUser = new User(username, password, false);
         users.add(newUser);
         saveUsers();
-        System.out.println("User added.");
+        return true;
     }
 
-    public void removeUser(String username) {
+    public boolean removeUser(String username) {
         if (!isUserLoggedIn()) {
             System.out.println("No user is currently logged in.");
-            return;
+            return false;
         }
 
         if (!isUserAdmin()) {
             System.out.println("Access denied! You must be an admin perform this action.");
-            return;
+            return false;
         }
 
         User userToRemove = findUserByUsername(username);
         if (userToRemove == null) {
             System.out.println("User not found.");
-            return;
+            return false;
         }
+
         users.remove(userToRemove);
         saveUsers();
-        System.out.println("User removed.");
+        return true;
     }
 
     private User findUserByUsername(String username) {
