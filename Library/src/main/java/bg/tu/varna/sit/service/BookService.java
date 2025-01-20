@@ -147,14 +147,35 @@ public class BookService {
     }
 
     public boolean addBook(Book newBook) {
+        if (!isUserLoggedIn()) {
+            System.out.println("No user is currently logged in.");
+            return false;
+        }
+
+        if(!isUserAdmin()){
+            System.out.println("Access denied! You must be an admin perform this action.");
+            return false;
+        }
+
         if (findBookByIsbn(newBook.getIsbn()) != null) {
             return false;
         }
+
         books.add(newBook);
         return true;
     }
 
     public boolean removeBook(String isbn) {
+        if (!isUserLoggedIn()) {
+            System.out.println("No user is currently logged in.");
+            return false;
+        }
+        
+        if(!isUserAdmin()){
+            System.out.println("Access denied! You must be an admin perform this action.");
+            return false;
+        }
+
         Book bookToRemove = findBookByIsbn(isbn);
 
         if (bookToRemove != null) {
@@ -245,6 +266,16 @@ public class BookService {
     }
 
     public void addUser(String username, String password) {
+        if (!isUserLoggedIn()) {
+            System.out.println("No user is currently logged in.");
+            return;
+        }
+
+        if(!isUserAdmin()){
+            System.out.println("Access denied! You must be an admin perform this action.");
+            return;
+        }
+
         if (findUserByUsername(username) != null) {
             System.out.println("User already exists.");
             return;
@@ -257,6 +288,16 @@ public class BookService {
     }
 
     public void removeUser(String username) {
+        if (!isUserLoggedIn()) {
+            System.out.println("No user is currently logged in.");
+            return;
+        }
+
+        if(!isUserAdmin()){
+            System.out.println("Access denied! You must be an admin perform this action.");
+            return;
+        }
+
         User userToRemove = findUserByUsername(username);
         if (userToRemove == null) {
             System.out.println("User not found.");
@@ -310,6 +351,10 @@ public class BookService {
 
     public User getLoggedInUser() {
         return loggedInUser;
+    }
+
+    public boolean isUserAdmin() {
+        return loggedInUser.isAdmin();
     }
 
     // ----------------------

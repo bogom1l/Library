@@ -33,7 +33,7 @@ public class BooksAddCommand implements Command {
         if (bookService.addBook(newBook)) {
             System.out.println("Book added successfully.");
         } else {
-            System.out.println("Failed to add the book. A book with the same ISBN might already exist.");
+            System.out.println("Failed to add the book.");
         }
     }
 }

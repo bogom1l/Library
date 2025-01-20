@@ -7,12 +7,12 @@
     </user>
     <user>
         <admin>false</admin>
-        <password>b</password>
-        <username>a</username>
+        <password>w</password>
+        <username>w</username>
     </user>
     <user>
         <admin>false</admin>
-        <password>w</password>
-        <username>w</username>
+        <password>b</password>
+        <username>b</username>
     </user>
 </users>
