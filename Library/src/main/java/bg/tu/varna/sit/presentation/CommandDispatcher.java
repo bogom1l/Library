@@ -42,13 +42,7 @@ public class CommandDispatcher {
                 case "exit":
                     System.exit(0);
                 case "login":
-                    if (commandParts.length == 3) {
-                        String username = commandParts[1];
-                        String password = commandParts[2];
-                        new LoginCommand(bookService, username, password).execute();
-                    } else {
-                        System.out.println("Usage: login <username> <password>");
-                    }
+                    new LoginCommand(bookService).execute();
                     break;
                 case "logout":
                     new LogoutCommand(bookService).execute();
