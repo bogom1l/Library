@@ -116,7 +116,8 @@ public class CommandDispatcher {
                     String optionString = commandParts[3];
                     new BooksFindCommand(bookService, option, optionString).execute();
                 } else {
-                    System.out.println("Usage: books find <option> <option_string>");
+                    System.out.println("Usage: books find <option> <option_string>" +
+                            "\t|\t<option> is one of: 'title', 'author' , 'tag'");
                 }
                 break;
             case "sort":
@@ -125,7 +126,8 @@ public class CommandDispatcher {
                     String order = commandParts[3];
                     new BooksSortCommand(bookService, option, order).execute();
                 } else {
-                    System.out.println("Usage: books sort <option> <asc/desc>");
+                    System.out.println("Usage: books sort <option> <asc/desc>" +
+                            "\t|\t<option> is one of: 'title', 'author' , 'year', 'rating''");
                 }
                 break;
             default:

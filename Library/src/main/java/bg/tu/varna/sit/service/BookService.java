@@ -120,6 +120,11 @@ public class BookService {
     }
 
     public void displayAllBooks() {
+        if (!isUserLoggedIn()) {
+            System.out.println("No user is currently logged in.");
+            return;
+        }
+
         if (books.isEmpty()) {
             System.out.println("No books available.");
         } else {
@@ -128,6 +133,11 @@ public class BookService {
     }
 
     public void displayBookInfo(String isbn) {
+        if (!isUserLoggedIn()) {
+            System.out.println("No user is currently logged in.");
+            return;
+        }
+
         Book book = findBookByIsbn(isbn);
         if (book != null) {
             System.out.println(book);
@@ -162,6 +172,11 @@ public class BookService {
     }
 
     public void findBooks(String option, String optionString) {
+        if (!isUserLoggedIn()) {
+            System.out.println("No user is currently logged in.");
+            return;
+        }
+
         List<Book> foundBooks = new ArrayList<>();
         switch (option.toLowerCase()) {
             case "title":
@@ -187,6 +202,11 @@ public class BookService {
     }
 
     public void sortBooks(String option, String order) {
+        if (!isUserLoggedIn()) {
+            System.out.println("No user is currently logged in.");
+            return;
+        }
+
         Comparator<Book> comparator = null;
 
         switch (option.toLowerCase()) {
