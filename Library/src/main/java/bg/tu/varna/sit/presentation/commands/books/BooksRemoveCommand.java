@@ -18,7 +18,7 @@ public class BooksRemoveCommand implements Command {
         if (removed) {
             System.out.println("Book with ISBN " + isbn + " removed successfully.");
         } else {
-            System.out.println("No book found with ISBN " + isbn + ".");
+            System.out.println("Failed to remove the book.");
         }
     }
 }

@@ -7,8 +7,6 @@ import bg.tu.varna.sit.data.User;
 import bg.tu.varna.sit.data.UsersWrapper;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -40,15 +38,6 @@ public class BookService {
 
     public boolean isBooksFileOpened() {
         return this.isBooksFileOpened;
-    }
-
-    public boolean isFileAccessible() {
-        File file = new File(booksFilePath);
-        try (FileInputStream fis = new FileInputStream(file)) {
-            return true; // File is accessible
-        } catch (IOException e) {
-            return false; // File is not accessible
-        }
     }
 
     private boolean doesFileExist(String filePath) {
@@ -100,7 +89,13 @@ public class BookService {
         System.out.println("File closed.");
     }
 
+    //todo: moga v saveAs da polzvam private save() methoda ama trqbva da go refactorna da priema String filePath
     public void save() {
+        if (!isBooksFileOpened) {
+            System.out.println("No file is currently opened.");
+            return;
+        }
+
         saveBooks();
     }
 
@@ -112,6 +107,11 @@ public class BookService {
     }
 
     public void saveAs(String newFilePath) {
+        if (!isBooksFileOpened) {
+            System.out.println("No file is currently opened.");
+            return;
+        }
+
         BooksWrapper booksWrapper = new BooksWrapper();
         booksWrapper.setBooks(books);
         String fullNewFilePath = directory + File.separator + "Library" + File.separator + newFilePath;
@@ -120,6 +120,11 @@ public class BookService {
     }
 
     public void displayAllBooks() {
+        if (!isBooksFileOpened) {
+            System.out.println("No file is currently opened.");
+            return;
+        }
+
         if (!isUserLoggedIn()) {
             System.out.println("No user is currently logged in.");
             return;
@@ -133,6 +138,11 @@ public class BookService {
     }
 
     public void displayBookInfo(String isbn) {
+        if (!isBooksFileOpened) {
+            System.out.println("No file is currently opened.");
+            return;
+        }
+
         if (!isUserLoggedIn()) {
             System.out.println("No user is currently logged in.");
             return;
@@ -147,12 +157,17 @@ public class BookService {
     }
 
     public boolean addBook(Book newBook) {
+        if (!isBooksFileOpened) {
+            System.out.println("No file is currently opened.");
+            return false;
+        }
+
         if (!isUserLoggedIn()) {
             System.out.println("No user is currently logged in.");
             return false;
         }
 
-        if(!isUserAdmin()){
+        if (!isUserAdmin()) {
             System.out.println("Access denied! You must be an admin perform this action.");
             return false;
         }
@@ -166,12 +181,17 @@ public class BookService {
     }
 
     public boolean removeBook(String isbn) {
+        if (!isBooksFileOpened) {
+            System.out.println("No file is currently opened.");
+            return false;
+        }
+
         if (!isUserLoggedIn()) {
             System.out.println("No user is currently logged in.");
             return false;
         }
-        
-        if(!isUserAdmin()){
+
+        if (!isUserAdmin()) {
             System.out.println("Access denied! You must be an admin perform this action.");
             return false;
         }
@@ -193,6 +213,11 @@ public class BookService {
     }
 
     public void findBooks(String option, String optionString) {
+        if (!isBooksFileOpened) {
+            System.out.println("No file is currently opened.");
+            return;
+        }
+
         if (!isUserLoggedIn()) {
             System.out.println("No user is currently logged in.");
             return;
@@ -223,6 +248,11 @@ public class BookService {
     }
 
     public void sortBooks(String option, String order) {
+        if (!isBooksFileOpened) {
+            System.out.println("No file is currently opened.");
+            return;
+        }
+
         if (!isUserLoggedIn()) {
             System.out.println("No user is currently logged in.");
             return;
@@ -271,7 +301,7 @@ public class BookService {
             return;
         }
 
-        if(!isUserAdmin()){
+        if (!isUserAdmin()) {
             System.out.println("Access denied! You must be an admin perform this action.");
             return;
         }
@@ -293,7 +323,7 @@ public class BookService {
             return;
         }
 
-        if(!isUserAdmin()){
+        if (!isUserAdmin()) {
             System.out.println("Access denied! You must be an admin perform this action.");
             return;
         }
