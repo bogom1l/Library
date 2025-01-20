@@ -20,6 +20,7 @@ public class BookService {
     private List<Book> books;
     private List<User> users;
     private boolean isBooksFileOpened = false;
+    private User loggedInUser;
 
     public BookService() {
         books = new ArrayList<>();
@@ -214,7 +215,7 @@ public class BookService {
         books.forEach(System.out::println);
     }
 
-    // ------------------------------------------------------------------------
+    // -------------------- users --------------------------------
 
     private void saveUsers() {
         UsersWrapper usersWrapper = new UsersWrapper();
@@ -252,5 +253,45 @@ public class BookService {
                 .findFirst()
                 .orElse(null);
     }
+
+    // -------- login/logout ------------
+
+    public void login(String username, String password) {
+        if (isUserLoggedIn()) {
+            System.out.println("You are already logged in with username: " + loggedInUser.getUsername());
+            return;
+        }
+
+        User user = users.stream()
+                .filter(u -> u.getUsername().equals(username) && u.getPassword().equals(password))
+                .findFirst()
+                .orElse(null);
+
+        if (user == null) {
+            System.out.println("Invalid username or password.");
+        } else {
+            loggedInUser = user;
+            System.out.println("Login successful. Welcome, " + username + "!");
+        }
+    }
+
+    public void logout() {
+        if (!isUserLoggedIn()) {
+            System.out.println("No user is currently logged in.");
+        } else {
+            System.out.println("Goodbye, " + loggedInUser.getUsername() + "!");
+            loggedInUser = null;
+        }
+    }
+
+    public boolean isUserLoggedIn() {
+        return loggedInUser != null;
+    }
+
+    public User getLoggedInUser() {
+        return loggedInUser;
+    }
+
+    // ----------------------
 
 }

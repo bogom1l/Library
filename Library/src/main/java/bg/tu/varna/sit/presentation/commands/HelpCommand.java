@@ -16,7 +16,7 @@ public class HelpCommand implements Command {
         System.out.println("4. saveas <file.xml>");
         System.out.println("5. help");
         System.out.println("6. exit");
-        System.out.println("7. login");
+        System.out.println("7. login <username> <password>");
         System.out.println("8. logout");
         System.out.println("9. books all");
         System.out.println("10. books add <author> <title> <genre> <description> <year> <keywords> <rating> <isbn>");

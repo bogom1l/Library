@@ -2,6 +2,8 @@ package bg.tu.varna.sit.presentation;
 
 import bg.tu.varna.sit.presentation.commands.*;
 import bg.tu.varna.sit.presentation.commands.books.*;
+import bg.tu.varna.sit.presentation.commands.users.LoginCommand;
+import bg.tu.varna.sit.presentation.commands.users.LogoutCommand;
 import bg.tu.varna.sit.presentation.commands.users.UsersAddCommand;
 import bg.tu.varna.sit.presentation.commands.users.UsersRemoveCommand;
 import bg.tu.varna.sit.service.BookService;
@@ -39,13 +41,20 @@ public class CommandDispatcher {
                     break;
                 case "exit":
                     System.exit(0);
+                case "login":
+                    String username = commandParts[1];
+                    String password = commandParts[2];
+                    new LoginCommand(bookService, username, password).execute();
+                    break;
+                case "logout":
+                    new LogoutCommand(bookService).execute();
+                    break;
                 case "books":
                     handleBooksCommand(commandParts);
                     break;
                 case "users":
                     handleUsersCommand(commandParts);
                     break;
-                //todo add login/logout
                 default:
                     System.out.println("Unknown command. Type 'help' for a list of commands.");
             }
