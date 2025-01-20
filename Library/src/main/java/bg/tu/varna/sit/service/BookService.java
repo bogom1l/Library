@@ -8,6 +8,7 @@ import bg.tu.varna.sit.data.UsersWrapper;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -244,6 +245,7 @@ public class BookService {
                 System.out.println("Invalid option.");
                 return;
         }
+
         foundBooks.forEach(System.out::println);
     }
 
@@ -258,32 +260,91 @@ public class BookService {
             return;
         }
 
-        Comparator<Book> comparator = null;
-
+        // Merge Sort based on the selected option
         switch (option.toLowerCase()) {
             case "title":
-                comparator = Comparator.comparing(Book::getTitle);
+                mergeSort(books, "title");
                 break;
             case "author":
-                comparator = Comparator.comparing(Book::getAuthor);
+                mergeSort(books, "author");
                 break;
             case "year":
-                comparator = Comparator.comparingInt(Book::getYear);
+                mergeSort(books, "year");
                 break;
             case "rating":
-                comparator = Comparator.comparingDouble(Book::getRating);
+                mergeSort(books, "rating");
                 break;
             default:
-                System.out.println("Invalid option for sorting.");
+                System.out.println("Invalid sorting option.");
                 return;
         }
 
+        // Sort in asc/desc order
         if ("desc".equalsIgnoreCase(order)) {
-            comparator = comparator.reversed();
+            Collections.reverse(books);
         }
 
-        books.sort(comparator);
+        // Print sorted books
         books.forEach(System.out::println);
+    }
+
+    private void mergeSort(List<Book> list, String option) {
+        if (list.size() <= 1) {
+            return;
+        }
+
+        // Split the list into two halves
+        int mid = list.size() / 2;
+        List<Book> left = new ArrayList<>(list.subList(0, mid));
+        List<Book> right = new ArrayList<>(list.subList(mid, list.size()));
+
+        // Recursively sort both halves
+        mergeSort(left, option);
+        mergeSort(right, option);
+
+        // Merge the sorted halves
+        merge(list, left, right, option);
+    }
+
+    private void merge(List<Book> list, List<Book> left, List<Book> right, String option) {
+        int i = 0, j = 0, k = 0;
+
+        // Merge the two lists based on the selected option
+        while (i < left.size() && j < right.size()) {
+            boolean conditionMet;
+            switch (option.toLowerCase()) {
+                case "title":
+                    conditionMet = left.get(i).getTitle().compareTo(right.get(j).getTitle()) < 0;
+                    break;
+                case "author":
+                    conditionMet = left.get(i).getAuthor().compareTo(right.get(j).getAuthor()) < 0;
+                    break;
+                case "year":
+                    conditionMet = left.get(i).getYear() < right.get(j).getYear();
+                    break;
+                case "rating":
+                    conditionMet = left.get(i).getRating() < right.get(j).getRating();
+                    break;
+                default:
+                    System.out.println("Invalid option.");
+                    return;
+            }
+
+            if (conditionMet) {
+                list.set(k++, left.get(i++));
+            } else {
+                list.set(k++, right.get(j++));
+            }
+        }
+
+        // Add the remaining elements of the left or right list
+        while (i < left.size()) {
+            list.set(k++, left.get(i++));
+        }
+
+        while (j < right.size()) {
+            list.set(k++, right.get(j++));
+        }
     }
 
     // -------------------- users --------------------------------
