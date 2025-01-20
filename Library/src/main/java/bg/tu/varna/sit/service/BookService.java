@@ -89,6 +89,13 @@ public class BookService {
     }
 
     //todo: moga v saveAs da polzvam private save() methoda ama trqbva da go refactorna da priema String filePath
+    private void saveBooks() {
+        BooksWrapper booksWrapper = new BooksWrapper();
+        booksWrapper.setBooks(books);
+        JAXBParser.saveObjectToXML(booksFilePath, booksWrapper);
+        System.out.println("Books saved to XML.");
+    }
+
     public void save() {
         if (!isBooksFileOpened) {
             System.out.println("No file is currently opened.");
@@ -96,13 +103,6 @@ public class BookService {
         }
 
         saveBooks();
-    }
-
-    private void saveBooks() {
-        BooksWrapper booksWrapper = new BooksWrapper();
-        booksWrapper.setBooks(books);
-        JAXBParser.saveObjectToXML(booksFilePath, booksWrapper);
-        System.out.println("Books saved to XML.");
     }
 
     public void saveAs(String newFilePath) {
