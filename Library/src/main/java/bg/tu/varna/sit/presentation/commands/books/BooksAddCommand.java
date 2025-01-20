@@ -30,6 +30,7 @@ public class BooksAddCommand implements Command {
     @Override
     public void execute() {
         Book newBook = new Book(author, title, genre, description, year, keywords, rating, isbn);
+
         if (bookService.addBook(newBook)) {
             System.out.println("Book added successfully.");
         } else {

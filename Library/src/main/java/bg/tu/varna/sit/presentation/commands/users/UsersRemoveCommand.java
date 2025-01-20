@@ -14,7 +14,6 @@ public class UsersRemoveCommand implements Command {
 
     @Override
     public void execute() {
-        System.out.println("Removing user: " + username);
         bookService.removeUser(username);
     }
 }

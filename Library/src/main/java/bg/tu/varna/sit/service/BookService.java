@@ -9,17 +9,18 @@ import bg.tu.varna.sit.data.UsersWrapper;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 public class BookService {
     private static final String directory = System.getProperty("user.dir");
     private static final String usersFilePath = System.getProperty("user.dir") + File.separator + "Library" + File.separator + "users.xml";
-    private String booksFilePath;
+
     private List<Book> books;
     private List<User> users;
-    private boolean isBooksFileOpened = false;
+
+    private String booksFilePath;
     private User loggedInUser;
+    private boolean isBooksFileOpened = false;
 
     public BookService() {
         books = new ArrayList<>();
@@ -29,16 +30,13 @@ public class BookService {
 
     private void openUsersFile() {
         UsersWrapper usersWrapper = JAXBParser.loadObjectFromXML(usersFilePath, UsersWrapper.class);
+
         if (usersWrapper != null) {
             users = usersWrapper.getUsers();
             System.out.println("Users loaded: " + users.size());
         } else {
             System.out.println("No users found in the XML file.");
         }
-    }
-
-    public boolean isBooksFileOpened() {
-        return this.isBooksFileOpened;
     }
 
     private boolean doesFileExist(String filePath) {
@@ -198,12 +196,13 @@ public class BookService {
         }
 
         Book bookToRemove = findBookByIsbn(isbn);
-
-        if (bookToRemove != null) {
-            books.remove(bookToRemove);
-            return true;
+        if (bookToRemove == null) {
+            System.out.println("Book not found with the provided ISBN.");
+            return false;
         }
-        return false;
+
+        books.remove(bookToRemove);
+        return true;
     }
 
     private Book findBookByIsbn(String isbn) {
@@ -260,7 +259,6 @@ public class BookService {
             return;
         }
 
-        // Merge Sort based on the selected option
         switch (option.toLowerCase()) {
             case "title":
                 mergeSort(books, "title");
@@ -347,8 +345,6 @@ public class BookService {
         }
     }
 
-    // -------------------- users --------------------------------
-
     private void saveUsers() {
         UsersWrapper usersWrapper = new UsersWrapper();
         usersWrapper.setUsers(users);
@@ -406,8 +402,6 @@ public class BookService {
                 .orElse(null);
     }
 
-    // -------- login/logout ------------
-
     public void login(String username, String password) {
         if (isUserLoggedIn()) {
             System.out.println("You are already logged in with username: " + loggedInUser.getUsername());
@@ -440,14 +434,8 @@ public class BookService {
         return loggedInUser != null;
     }
 
-    public User getLoggedInUser() {
-        return loggedInUser;
-    }
-
     public boolean isUserAdmin() {
         return loggedInUser.isAdmin();
     }
-
-    // ----------------------
 
 }

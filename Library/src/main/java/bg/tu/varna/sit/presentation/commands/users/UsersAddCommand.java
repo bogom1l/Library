@@ -16,7 +16,6 @@ public class UsersAddCommand implements Command {
 
     @Override
     public void execute() {
-        System.out.println("Adding user: " + username);
         bookService.addUser(username, password);
     }
 }

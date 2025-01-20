@@ -15,6 +15,7 @@ public class BooksRemoveCommand implements Command {
     @Override
     public void execute() {
         boolean removed = bookService.removeBook(isbn);
+
         if (removed) {
             System.out.println("Book with ISBN " + isbn + " removed successfully.");
         } else {
