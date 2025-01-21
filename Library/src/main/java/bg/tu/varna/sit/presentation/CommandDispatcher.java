@@ -16,7 +16,6 @@ public class CommandDispatcher {
     }
 
     public void dispatch(String commandLine) {
-
         String[] commandParts = commandLine.split(" ");
         String command = commandParts[0];
 

@@ -1,23 +1,32 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <books>
     <book>
-        <author>Author 1</author>
-        <description>Description 1</description>
-        <genre>Genre 1</genre>
-        <isbn>ISBN12345</isbn>
-        <keywords>Keywords 1</keywords>
+        <author>Mary Shelley</author>
+        <description>The story of Victor Frankenstein and his monstrous creation.</description>
+        <genre>Horror</genre>
+        <isbn>9780486282114</isbn>
+        <keywords>Shelley, monster, creation</keywords>
         <rating>4.5</rating>
-        <title>Title 1</title>
-        <year>2025</year>
+        <title>Frankenstein</title>
+        <year>1818</year>
     </book>
     <book>
-        <author>aa</author>
-        <description>dd</description>
-        <genre>gg</genre>
-        <isbn>ii</isbn>
-        <keywords>kk</keywords>
-        <rating>11.0</rating>
-        <title>tt</title>
-        <year>22</year>
+        <author>Jane Austen</author>
+        <description>A romantic novel exploring themes of love, social standing, and character.</description>
+        <genre>Romance</genre>
+        <isbn>9781503290563</isbn>
+        <keywords>Austen, romance, class</keywords>
+        <rating>4.6</rating>
+        <title>Pride</title>
+        <year>1813</year>
+    </book>
+    <book>
+        <author>George R.R. Martin</author>
+        <description>The first novel in the epic fantasy series "A Song of Ice and Fire."</description>
+        <genre>Fantasy</genre>
+        <isbn>9780553593716</isbn>
+        <keywords>Martin, fantasy, thrones</keywords>
+        <rating>4.7</rating>
+        <title>Thrones</title>
+        <year>1996</year>
     </book>
 </books>
