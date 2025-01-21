@@ -18,7 +18,7 @@ public class BookService {
     private List<Book> books;
     private List<User> users;
 
-    private String booksFilePath;
+    private String booksFilePath; // Path to the currently opened books file
     private User loggedInUser;
     private boolean isBooksFileOpened = false;
 
@@ -28,6 +28,7 @@ public class BookService {
         openUsersFile();
     }
 
+    // Load the users form the XML file into the users list
     private void openUsersFile() {
         UsersWrapper usersWrapper = JAXBParser.loadObjectFromXML(usersFilePath, UsersWrapper.class);
 
@@ -48,6 +49,7 @@ public class BookService {
         return fileName.endsWith(".xml");
     }
 
+    // Opens a books XML file and loads its content
     public void open(String booksFileName) {
         booksFilePath = directory + File.separator + "Library" + File.separator + booksFileName;
 
@@ -434,5 +436,4 @@ public class BookService {
     public boolean isUserAdmin() {
         return loggedInUser.isAdmin();
     }
-
 }
