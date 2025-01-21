@@ -88,12 +88,10 @@ public class BookService {
         System.out.println("File closed.");
     }
 
-    //todo: moga v saveAs da polzvam private save() methoda ama trqbva da go refactorna da priema String filePath
-    private void saveBooks() {
+    private void saveBooks(String filePath) {
         BooksWrapper booksWrapper = new BooksWrapper();
         booksWrapper.setBooks(books);
-        JAXBParser.saveObjectToXML(booksFilePath, booksWrapper);
-        System.out.println("Books saved to XML.");
+        JAXBParser.saveObjectToXML(filePath, booksWrapper);
     }
 
     public void save() {
@@ -102,7 +100,8 @@ public class BookService {
             return;
         }
 
-        saveBooks();
+        saveBooks(this.booksFilePath);
+        System.out.println("Books saved to XML.");
     }
 
     public void saveAs(String newFilePath) {
@@ -111,10 +110,8 @@ public class BookService {
             return;
         }
 
-        BooksWrapper booksWrapper = new BooksWrapper();
-        booksWrapper.setBooks(books);
         String fullNewFilePath = directory + File.separator + "Library" + File.separator + newFilePath;
-        JAXBParser.saveObjectToXML(fullNewFilePath, booksWrapper);
+        saveBooks(fullNewFilePath);
         System.out.println("Books saved to new path: " + fullNewFilePath);
     }
 
