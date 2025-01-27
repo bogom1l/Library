@@ -1,0 +1,32 @@
+<books>
+    <book>
+        <author>George Orwell</author>
+        <description>A dystopian social science fiction novel and cautionary tale about the dangers of totalitarianism.</description>
+        <genre>Dystopian</genre>
+        <isbn>123</isbn>
+        <keywords>Orwell, dystopia, totalitarianism</keywords>
+        <rating>4.7</rating>
+        <title>1984</title>
+        <year>1949</year>
+    </book>
+    <book>
+        <author>Harper Lee</author>
+        <description>A novel about racial injustice in the Deep South during the 1930s.</description>
+        <genre>Fiction</genre>
+        <isbn>456</isbn>
+        <keywords>Lee, racism, South</keywords>
+        <rating>4.8</rating>
+        <title>Mockingbird</title>
+        <year>1960</year>
+    </book>
+    <book>
+        <author>John Steinbeck</author>
+        <description>A story about the struggles of migrant workers during the Great Depression.</description>
+        <genre>Historical Fiction</genre>
+        <isbn>789</isbn>
+        <keywords>Steinbeck, depression, poverty</keywords>
+        <rating>4.6</rating>
+        <title>Grapes</title>
+        <year>1939</year>
+    </book>
+</books>

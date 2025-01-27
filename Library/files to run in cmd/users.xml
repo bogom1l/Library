@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<users>
+    <user>
+        <admin>true</admin>
+        <password>i&lt;3c++</password>
+        <username>admin</username>
+    </user>
+    <user>
+        <admin>false</admin>
+        <password>w</password>
+        <username>w</username>
+    </user>
+    <user>
+        <admin>false</admin>
+        <password>b</password>
+        <username>b</username>
+    </user>
+</users>

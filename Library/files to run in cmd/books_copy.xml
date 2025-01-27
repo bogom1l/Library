@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<books>
+    <book>
+        <author>J.R.R. Tolkien</author>
+        <description>The journey of Frodo Baggins to destroy the One Ring and save Middle-earth.</description>
+        <genre>Fantasy</genre>
+        <isbn>111</isbn>
+        <keywords>Tolkien, ring, Middle-earth</keywords>
+        <rating>4.9</rating>
+        <title>Hobbit</title>
+        <year>1937</year>
+    </book>
+    <book>
+        <author>F. Scott Fitzgerald</author>
+        <description>A critique of the American Dream through the life of Jay Gatsby.</description>
+        <genre>Classic</genre>
+        <isbn>222</isbn>
+        <keywords>Fitzgerald, 1920s, dream</keywords>
+        <rating>4.4</rating>
+        <title>Gatsby</title>
+        <year>1925</year>
+    </book>
+    <book>
+        <author>Ernest Hemingway</author>
+        <description>The tale of an old fisherman’s struggle with a giant marlin.</description>
+        <genre>Fiction</genre>
+        <isbn>333</isbn>
+        <keywords>Hemingway, fisherman, sea</keywords>
+        <rating>4.3</rating>
+        <title>Old Man</title>
+        <year>1952</year>
+    </book>
+</books>
