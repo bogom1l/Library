@@ -3,7 +3,7 @@
         <author>Mary Shelley</author>
         <description>The story of Victor Frankenstein and his monstrous creation.</description>
         <genre>Horror</genre>
-        <isbn>9780486282114</isbn>
+        <isbn>8765</isbn>
         <keywords>Shelley, monster, creation</keywords>
         <rating>4.5</rating>
         <title>Frankenstein</title>
@@ -13,7 +13,7 @@
         <author>Jane Austen</author>
         <description>A romantic novel exploring themes of love, social standing, and character.</description>
         <genre>Romance</genre>
-        <isbn>9781503290563</isbn>
+        <isbn>6453</isbn>
         <keywords>Austen, romance, class</keywords>
         <rating>4.6</rating>
         <title>Pride</title>
@@ -23,7 +23,7 @@
         <author>George R.R. Martin</author>
         <description>The first novel in the epic fantasy series "A Song of Ice and Fire."</description>
         <genre>Fantasy</genre>
-        <isbn>9780553593716</isbn>
+        <isbn>55788</isbn>
         <keywords>Martin, fantasy, thrones</keywords>
         <rating>4.7</rating>
         <title>Thrones</title>

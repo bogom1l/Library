@@ -13,7 +13,7 @@ import java.util.List;
 
 public class BookService {
     private static final String directory = System.getProperty("user.dir");
-    private static final String usersFilePath = System.getProperty("user.dir") + File.separator + "Library" + File.separator + "users.xml";
+    private static final String usersFilePath = directory + File.separator + "users.xml";
 
     private List<Book> books;
     private List<User> users;
@@ -51,7 +51,7 @@ public class BookService {
 
     // Opens a books XML file and loads its content
     public void open(String booksFileName) {
-        booksFilePath = directory + File.separator + "Library" + File.separator + booksFileName;
+        booksFilePath = directory + File.separator + booksFileName;
 
         if (isBooksFileOpened) {
             System.out.println("The books file is already opened.");
@@ -112,9 +112,8 @@ public class BookService {
             return;
         }
 
-        String fullNewFilePath = directory + File.separator + "Library" + File.separator + newFilePath;
-        saveBooks(fullNewFilePath);
-        System.out.println("Books saved to new path: " + fullNewFilePath);
+        saveBooks(newFilePath);
+        System.out.println("Books saved to new path: " + newFilePath);
     }
 
     public void displayAllBooks() {
