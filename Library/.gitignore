@@ -32,3 +32,6 @@ mvnw
 mvnw.cmd
 HELP.md
 .gitattributes
+
+
+!./files_to_run_in_cmd/Library-1.0-SNAPSHOT.jar
